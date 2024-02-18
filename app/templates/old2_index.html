@@ -1,0 +1,87 @@
+<html>
+<head>
+    <h2>Assignment 1</h2>
+</head>
+<body>
+    <p>Hello World</p>
+    <label for="fnama">Nama:</label>
+    <input type="text" id="fnama" name="fnama">
+    <br><br>
+
+    <label for="fumur">Umur:</label>
+    <input type="text" id="fumur" name="fumur">
+    <br><br>
+
+    <label for="fnilai">Nilai:</label>
+    <input type="number" id="fnilai" step='0.1' name="fnilai">
+    <br><br>
+
+    <label for="flulus">Lulus:</label>
+    <select id="flulus" name="flulus">
+        <option disabled selected value> -- select an option -- </option>
+        <option value="1">Ya</option>
+        <option value="0">Tidak</option>
+    </select>
+    <br><br>
+
+    <label for="ffoto">Pilih file foto:</label>
+    <input type="file" id="ffoto" name="ffoto" accept="image/*">
+    <br><br><br><br>
+
+    <label for="fchoosedb">Pilih Database:</label>
+    <select id="fchoosedb" name="fchoosedb">
+        <option disabled selected value> -- select an option -- </option>
+        <option value="classA">Kelas A</option>
+        <option value="classB">Kelas B</option>
+    </select>
+    <br><br>
+
+    <button onclick="PostRequest()">POST</button>
+    <br><br>
+
+    <button onclick="GetRequest()">GET</button>
+    <br><br>
+
+    <a href="/"><button>REFRESH</button></a>
+
+    <div id="res"></div>
+
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function GetRequest() {
+            axios
+                .get('http://127.0.0.1:5000/get', {
+                  timeout: 5000
+                })
+                .then(res => showData(res))
+                .catch(err => console.error(err));
+        }
+
+        function PostRequest() {
+            var fumur = document.getElementById("fumur");
+            var fnilai = document.getElementById("fnilai");
+            var flulus = document.getElementById("flulus");
+            var fchoosedb = document.getElementById("fchoosedb");
+            var fnama = document.getElementById("fnama");
+            axios
+                .post('http://127.0.0.1:5000/post', {
+                    fnama: fnama.value,
+                    fumur: fumur.value,
+                    fnilai: fnilai.value,
+                    flulus: parseInt(flulus.value),
+                    fchoosedb: fchoosedb.value
+                })
+                .then(res => showData(res))
+                .catch(err => console.error(err));
+        }
+
+        function showData(res) {
+          document.getElementById('res').innerHTML = `
+            <div></div>
+            <div><pre>${JSON.stringify(res.data, null, 2)}</pre></div>`;
+        }
+    </script>
+
+</body>
+</html>

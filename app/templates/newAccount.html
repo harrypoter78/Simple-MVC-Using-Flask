@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <label for="fuser">Username:</label>
+    <input type="text" id="fuser">
+    <br><br>
+
+    <label for="fpass">Password:</label>
+    <input type="text" id="fpass">
+    <br><br>
+
+    <label for="femail">Email:</label>
+    <input type="text" id="femail">
+    <br><br>
+
+    <button onclick="Submit()">Submit</button>
+    <br><br>
+
+    <a href="/"><button>Back to Login Page</button></a>
+    <br><br>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function Submit() {
+            var fuser = document.getElementById("fuser");
+            var fpass = document.getElementById("fpass");
+            var femail = document.getElementById("femail");
+            axios
+                .post('http://127.0.0.1:5000/newAccount/post', {
+                    fuser: fuser.value,
+                    fpass: fpass.value,
+                    femail: femail.value
+                })
+                .then(window.location.reload())
+                .catch(err => console.error(err));
+        }
+
+    </script>
+
+</body>
+</html>

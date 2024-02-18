@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <form method="POST" action="/post">
+    <label for="fuser">Username:</label>
+    <input type="text" id="fuser" name="fuser">
+    <br><br>
+
+    <label for="fpass">Password:</label>
+    <input type="text" id="fpass" name="fpass">
+    <br><br>
+<!--    <button onclick="PostRequest()">POST</button>-->
+    <br><br>
+
+        <button type="submit">LOGIN</button>
+    </form>
+
+    <a href="{{ url_for('newAccount.index') }}"><button>Create Account</button></a>
+    <br>
+    {% if error %}
+            <p><strong>Error</strong>: {{error}}</p>
+    {% endif %}
+
+    <div id="res"></div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function PostRequest() {
+            var fuser = document.getElementById("fuser");
+            var fpass = document.getElementById("fpass");
+            axios
+                .post('http://127.0.0.1:5000/post', {
+                    fuser: fuser.value,
+                    fpass: fpass.value
+                })
+                .then(function(res){
+                    console.log(res)
+                    // return redirect('http://127.0.0.1:5000/home/');
+                    this.$router.replace('http://127.0.0.1:5000/home/');
+                })
+                .catch(err => console.error(err));
+        }
+
+        function showData(res) {
+          document.getElementById('res').innerHTML = `
+            <div></div>
+            <div><pre>${JSON.stringify(res.data, null, 2)}</pre></div>`;
+        }
+    </script>
+</body>
+</html>
